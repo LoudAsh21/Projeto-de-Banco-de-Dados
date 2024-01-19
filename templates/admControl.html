@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            /* Usando flexbox para as tabelas ficarem lado a lado */
+            justify-content: space-between;
+            /* Espaço entre as tabelas */
+            margin: 20px;
+            /* Margem externa para o espaçamento */
+        }
+
+        .table-container {
+            flex: 1;
+            /* Torna as tabelas flexíveis para ocupar o espaço disponível */
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            /* Tamanho ajustado para preencher o contêiner */
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .divider {
+            background-color: #333;
+            height: 1px;
+            margin: 20px 0;
+        }
+
+        .bigger-divider {
+            background-color: #333;
+            height: 2px;
+            margin: 40px 0;
+        }
+
+        /* Estilo para a caixa de seleção múltipla */
+        .select-box {
+            width: 300px;
+            /* Largura desejada */
+            height: 150px;
+            /* Altura desejada */
+        }
+
+        /* Estilo para o campo de entrada */
+        .text-input {
+            width: 300px;
+            /* Largura desejada */
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Estilo para o contêiner que mantém a seleção múltipla, o campo de entrada e o botão */
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        /* Estilo para o botão "Enviar" */
+        input[type="submit"] {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilizando a caixa de seleção com base no ID */
+        #minha-caixa-de-selecao {
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid #3498db;
+            border-radius: 0;
+            width: 200px;
+            font-size: 16px;
+            background-color: #f2f2f2;
+            appearance: none;
+        }
+
+        /* Estilizando as opções */
+        #minha-caixa-de-selecao option {
+            font-size: 16px;
+            background-color: #f2f2f2;
+            color: #333;
+            /* Cor do texto das opções */
+        }
+        .meu-botao {
+            background-color: #3498db; /* Cor de fundo do botão */
+            color: #fff; /* Cor do texto do botão */
+            border: none; /* Removendo a borda */
+            padding: 10px 20px; /* Espaçamento interno */
+            text-align: center; /* Centralizando o texto horizontalmente */
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px; /* Tamanho da fonte */
+            margin: 4px 2px; /* Margem externa */
+            cursor: pointer;
+            border-radius: 4px; /* Borda arredondada */
+        }
+
+        /* Estilizando o botão quando o cursor está sobre ele (hover) */
+        .meu-botao:hover {
+            background-color: #2c87b4; /* Cor de fundo mais escura ao passar o mouse */
+        }
+        .meu-botao2 {
+            background-color: #4CAF50; /* Cor de fundo do botão */
+            color: white; /* Cor do texto do botão */
+            padding: 10px 20px; /* Espaçamento interno (altura, largura) */
+            border: none; /* Sem borda */
+            border-radius: 5px; /* Borda arredondada */
+            cursor: pointer; /* Ícone de cursor de mão ao passar o mouse */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <form action="/index">
+            <button class="meu-botao2" type="submit">Voltar ao index</button>
+        </form>
+
+        <form action="/tasksControl">
+            <button class="meu-botao2" type="submit">Ir para o painel de controle de tarefas</button>
+        </form>
+    </div>
+    <h1>CONECTADO COMO {{session['username']}}</h1>
+    <h1>EQUIPES PERTENCENTES À {{session['username']}}</h1>
+
+    {% for team in owner_teams %}
+    <h2>TIME: {{team.name}} </h2>
+
+
+    <h3>Membros:</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in team.members %}
+            <tr>
+
+                <td>{{member.name}}</td>
+                <td>{{member.email}}</td>
+                <td>
+                    <form action="/deleteMember" method="post">
+                        <button type="submit" class="meu-botao" value="{{member.email}},{{team.equipe_id}}" name="excluir">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3 class="container">Adicione membros à esse time</h3>
+    <div class="container">
+        <form action="/updateTeam" method="post">
+            <div class="input-container">
+                <input type="email" name="email" id="email" class="text-input" placeholder="Email do usuário" required>
+            </div>
+            <br><br>
+            <button class="meu-botao" type="submit" value="{{team.equipe_id}}" id="id" name="id">Adicionar</button>
+        </form>
+    </div>
+
+
+    {% if team.projects %}
+    {% for project in team.projects %}
+    <h1>Projeto: {{project.project_name}}</h1>
+    <div class="container">
+        <div class="table-container">
+            <h2>Membros</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in project.members %}
+                    <tr>
+                        <td>{{member.name}}</td>
+                        <td>{{member.email}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="table-container">
+            {% if project.tasks %}
+            <h2>Tarefas</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tarefa</th>
+                        <th>Responsável</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in project.tasks %}
+                    <tr>
+                        <td>{{task.name}}</td>
+                        <td>{{task.assigned}}</td>
+                        <td>{{task.status}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <b>Não há tarefas nesse projeto</b>
+            {% endif %}
+        </div>
+    </div>
+
+
+    <br><br>
+    <h3 class="container">Adicione tarefas à esse projeto</h3>
+    <div class="container">
+        <form action="/addTask" method="post">
+            <div class="input-container">
+                <input type="text" name="name" class="text-input" placeholder="Nome da Tarefa" required>
+                <br><br>
+                <b>Selecione o membro</b>
+                <br><br>
+                <select name="email" id="minha-caixa-de-selecao">
+
+                    {% for member in project.members %}
+                    <option value={{member.email}}>{{member.email}}</option>
+                    {% endfor %}
+
+                </select>
+            </div>
+            <br><br>
+            <button class="meu-botao" type="submit" value={{project._id}} name="id">Adicionar</button>
+        </form>
+    </div>
+
+    <div class="divider"></div>
+    {% endfor %}
+    <div class="bigger-divider"></div>
+    {% else %}
+    <br><br><b>Não há projetos para esse time</b>
+    {% endif %}
+    <br><br>
+    <h3 class="container">Adicione projetos à esse time</h3>
+    <div class="container">
+        <form action="/addProject" method="post">
+            <div class="input-container">
+                <input type="text" name="name" class="text-input" placeholder="Nome do Projeto" required>
+                <br><br>
+                <b>Selecione os membros</b>
+                <br><br>
+                <select name="emails[]" multiple="multiple" class="select-box">
+
+                    {% for member in team.members %}
+                    {% if member.email != session['email'] %}
+                    <option value={{member.email}}>{{member.name}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <button class="meu-botao" type="submit" value={{team.equipe_id}} name="id">Adicionar</button>
+        </form>
+    </div>
+    {% endfor %}
+</body>
+
+</html>

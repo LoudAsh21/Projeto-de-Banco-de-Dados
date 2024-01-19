@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Estilos para centralizar o formulário */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        /* Estilos para o formulário */
+        .signup-form {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        /* Estilos para os campos de entrada */
+        .signup-input {
+            width: 75%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Estilos para os botões */
+        .signup-button {
+            width: 80%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-button {
+            width: 80%;
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-form">
+        <h2>Criar uma conta</h2>
+        <form action="/register" method="post">
+            <input type="text" name="name" id="name" required class="signup-input" placeholder="Nome">
+            <input type="text" name="lastname" id="lastname" required class="signup-input" placeholder="Sobrenome">
+            <input type="email" name="email" id="email" required class="signup-input" placeholder="Email">
+            <input type="password" name="password" id="password" required class="signup-input" placeholder="Senha">
+            <button type="submit" class="signup-button">Criar Conta</button>
+        </form>
+        {% if user %}
+            <p>{{msg}}</p> 
+        {% endif %}
+        <form action="/">
+            <button class="login-button">Voltar ao Login</button>
+        </form>
+    </div>
+</body>
+</html>
+
+<!-- {% if user %}
+        <p> {{msg}} </p>
+    {% endif %}
+
+    <body>
+        <form action="/register" method="post">
+            <input type="text" name="name" id="name" required placeholder="Nome"><br>
+            <input type="text" name="lastname" id="lastname" required placeholder="Sobrenome"><br>
+            <input type="email" name="email" id="email" required placeholder="Email"><br>
+            <input type="password" name="password" id="password" required placeholder="Senha"><br>
+            <button type="submit">Cadastar</button>
+        </form>
+        
+        <form action="/">
+            <button type="submit">Voltar ao login</button>
+        </form>
+    </body> -->

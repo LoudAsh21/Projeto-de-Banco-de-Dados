@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Estilos para centralizar o formulário */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        /* Estilos para o formulário */
+        .login-form {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        /* Estilos para os campos de entrada */
+        .login-input {
+            width: 75%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Estilos para o botão de login */
+        .login-button {
+            width: 80%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Estilos para o botão de criar conta */
+        .create-account-button {
+            width: 80%;
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-form">
+        <h2>Login</h2>
+        <form action="/index" method="post">
+            <input type="text" class="login-input" placeholder="Email" name="email" id="email" required>
+            <input type="password" class="login-input" placeholder="Senha" name="senha" id="senha" required>
+            <button type="submit" class="login-button">Entrar</button>
+        </form>
+        {% if user %}
+            <p>{{msg}}</p>
+        {% endif %}
+        <form action="/registerUser">
+            <button class="create-account-button">Criar uma conta</button>
+        </form>
+    </div>
+</body>
+</html>
+<!-- <div class="container">
+    <form action="/index" method="post">
+        <input type="text" class="minha-caixa-input" id="email" name="email" required placeholder="Email"><br>
+        <input type="password" class="minha-caixa-input" id="senha" name="senha" required placeholder="Senha"><br>
+        <button class="meu-botao" type="submit">Entrar</button>
+    </form>
+    <form action="/registerUser">
+        <button class="meu-botao" type="submit">Criar uma conta</button>
+    </form>
+</div> -->

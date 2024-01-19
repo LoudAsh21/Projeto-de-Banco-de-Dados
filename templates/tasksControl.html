@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            display: flex; /* Usando flexbox para as tabelas ficarem lado a lado */
+            justify-content: space-between; /* Espaço entre as tabelas */
+            margin: 20px; /* Margem externa para o espaçamento */
+        }
+        .table-container {
+            flex: 1; /* Torna as tabelas flexíveis para ocupar o espaço disponível */
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%; /* Tamanho ajustado para preencher o contêiner */
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .divider {
+            background-color: #333;
+            height: 1px;
+            margin: 20px 0;
+        }
+        .bigger-divider {
+            background-color: #333;
+            height: 2px;
+            margin: 40px 0;
+        }
+        .meu-botao {
+            background-color: #4CAF50; /* Cor de fundo do botão */
+            color: white; /* Cor do texto do botão */
+            padding: 10px 20px; /* Espaçamento interno (altura, largura) */
+            border: none; /* Sem borda */
+            border-radius: 5px; /* Borda arredondada */
+            cursor: pointer; /* Ícone de cursor de mão ao passar o mouse */
+        }
+        .meu-botao:disabled {
+            background-color: #ccc; /* Cor de fundo cinza para botão desativado */
+            color: #666; /* Cor do texto cinza mais escura para botão desativado */
+            cursor: not-allowed; /* Cursor de "não permitido" para botão desativado */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="/admControl">
+            <button class="meu-botao" type="submit">Ir para o painel de controle de equipes</button>
+        </form>
+
+        <form action="/index">
+            <button class="meu-botao" type="submit">Voltar ao index</button>
+        </form>
+    </div>
+    <h1>CONECTADO COMO {{session['username']}}</h1>
+
+    <h1>Suas tarefas:</h1>
+
+    {% for team in teams %}
+        <h2>TIME: {{team.name}}</h2>
+        {% for project in team.projects %}
+            {% if project.tasks %}
+                <h3>PROJETO {{project.project_name}}</h3>
+                <b>Tarefas:</b>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Status</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for task in project.tasks %}
+                            <tr>
+                                <td>{{task.name}}</td>
+                                {% if task.status %}
+                                <td>Concluída</td>
+                                <td><button class="meu-botao" disabled>Concluir</button></td>
+                                {% else %}
+                                <td>Pendente</td>
+                                <td>
+                                <form action="/updateTask" method="post">
+                                    <button type="submit" class="meu-botao" value="{{task.name}},{{project._id}}" name="concluir">Concluir</button>
+                                </form>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+        {% endfor %}
+    {% endfor %}
+</body>
+</html>
